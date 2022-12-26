@@ -9,6 +9,7 @@ const galleryMarkup = createGalleryMarkup(galleryItems);
 
 galleryContainerRef.insertAdjacentHTML("beforeend", galleryMarkup);
 
+// imageLinkRef.addEventListener("click", preventDefolt);
 galleryContainerRef.addEventListener("click", onGalleryContainerClick);
 
 function createGalleryMarkup(items) {
@@ -29,37 +30,20 @@ function createGalleryMarkup(items) {
 }
 
 function onGalleryContainerClick(event) {
-  //   const clickedImageUrl = event.target.dataset.source;
-
-  //   event.preventDefault();
-
-  //   const eventTargetNodeName = event.target.nodeName;
-  //   console.log(eventTargetNodeName);
-  //   console.log(event);
-
-  //   if (eventTargetNodeName !== "IMG") {
-  //     return;
-  //   }
-  //   console.log(clickedImageUrl);
-  //   return clickedImageUrl;
-
   event.preventDefault();
-  console.log(event);
-
   const clickedEl = event.target;
-  console.log(clickedEl);
 
   const isGalleryImageEl = clickedEl.classList.contains("gallery__image");
-  console.log(isGalleryImageEl);
 
   if (!isGalleryImageEl) {
     return;
   }
 
-  const parentImageEl = clickedEl.closest(".gallery__link");
-  console.log(parentImageEl);
+  const clickedImageUrl = clickedEl.closest(".gallery__link").href;
 
-  const clickedImageUrl = parentImageEl.href;
-  console.log(clickedImageUrl);
-  return clickedImageUrl;
+  const modal = basicLightbox.create(`
+    <img src="${clickedImageUrl}" width="800" height="600">
+`);
+
+  modal.show();
 }
