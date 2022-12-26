@@ -9,7 +9,6 @@ const galleryMarkup = createGalleryMarkup(galleryItems);
 
 galleryContainerRef.insertAdjacentHTML("beforeend", galleryMarkup);
 
-// imageLinkRef.addEventListener("click", preventDefolt);
 galleryContainerRef.addEventListener("click", onGalleryContainerClick);
 
 function createGalleryMarkup(items) {
@@ -41,9 +40,19 @@ function onGalleryContainerClick(event) {
 
   const clickedImageUrl = clickedEl.closest(".gallery__link").href;
 
+  showModal(clickedImageUrl);
+}
+
+function showModal(url) {
   const modal = basicLightbox.create(`
-    <img src="${clickedImageUrl}" width="800" height="600">
+    <img src="${url}" width="800" height="600">
 `);
 
   modal.show();
+
+  window.addEventListener("keydown", (event) => {
+    if (event.code === "Escape") {
+      modal.close();
+    }
+  });
 }
